@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Surface
+import android.view.Surface.ROTATION_180
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -65,10 +66,10 @@ class MainActivity : AppCompatActivity() {
         videoCapture = VideoCapture.withOutput(Recorder.Builder().build())
         viewBinding=ActivityMainBinding.inflate(layoutInflater)
 
-        val rotation : Int = Surface.ROTATION_90
-        Log.d("Camera",""+videoCapture.targetRotation.toString())
-        videoCapture.targetRotation=rotation
-        Log.d("Camera",""+videoCapture.targetRotation.toString())
+      //  val rotation : Int = Surface.ROTATION_90
+       // Log.d("Camera",""+videoCapture.targetRotation.toString())
+      //  videoCapture.targetRotation=rotation
+       // Log.d("Camera",""+videoCapture.targetRotation.toString())
 
         setContentView(viewBinding.root)
         if(!hasPermissions(baseContext)){              //作者選擇使用 baseContext，無論程式碼位於 Activity 還是 Fragment 中，都能夠確保使用相同的 Context 進行權限檢查。
@@ -86,14 +87,15 @@ class MainActivity : AppCompatActivity() {
     }
     private suspend fun startCamera(){  //該方法用於啟動相機
         val cameraProvider=ProcessCameraProvider.getInstance(this).await() //獲取相機提供程序的實例，getInstance方法回傳可監聽的future
-        val preview=Preview.Builder().build()  //創建预覽和圖像捕獲用例，並绑定到相機生命週期
+        val preview=Preview.Builder().setTargetRotation(ROTATION_180).build()  //創建预覽和圖像捕獲用例，並绑定到相機生命週期
         preview.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)  //可在此處傳入自訂服務提供者
         //val imageCapture=ImageCapture.Builder().build()
         //todo 接實機要改鏡頭
         //val cameraSelector=CameraSelector.DEFAULT_FRONT_CAMERA //預設前置鏡頭
         //val cameraSelector=CameraSelector.DEFAULT_BACK_CAMERA //預設後置鏡頭
        // val controller=LifecycleCameraController(applicationContext)
-
+        // 设置预览的 SurfaceProvider
+        preview.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
 
         try {
             cameraProvider.unbindAll()

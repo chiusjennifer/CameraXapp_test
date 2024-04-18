@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
+<!--    <Button
         android:id="@+id/Image_capture_button"
         android:layout_width="110dp"
         android:layout_height="110dp"
@@ -21,16 +21,16 @@
         android:text="@string/take_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
+-->
     <Button
         android:id="@+id/videoCaptureButton"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
         android:elevation="2dp"
         android:text="@string/record"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 

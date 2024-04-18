@@ -66,11 +66,6 @@ class MainActivity : AppCompatActivity() {
         videoCapture = VideoCapture.withOutput(Recorder.Builder().build())
         viewBinding=ActivityMainBinding.inflate(layoutInflater)
 
-      //  val rotation : Int = Surface.ROTATION_90
-       // Log.d("Camera",""+videoCapture.targetRotation.toString())
-      //  videoCapture.targetRotation=rotation
-       // Log.d("Camera",""+videoCapture.targetRotation.toString())
-
         setContentView(viewBinding.root)
         if(!hasPermissions(baseContext)){              //作者選擇使用 baseContext，無論程式碼位於 Activity 還是 Fragment 中，都能夠確保使用相同的 Context 進行權限檢查。
             //Request camera-related permissions
@@ -81,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        viewBinding.ImageCaptureButton.setOnClickListener { takePhoto() } //設置拍照按鈕的點擊監聽器
+        //viewBinding.ImageCaptureButton.setOnClickListener { takePhoto() } //設置拍照按鈕的點擊監聽器
         viewBinding.videoCaptureButton.setOnClickListener { captureVideo() }
 
     }
@@ -109,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
         Log.d("Camera","")
     }
-    private fun takePhoto(){  //该方法用於拍照並保存照片
+    /*private fun takePhoto(){  //该方法用於拍照並保存照片
         //建立帶有時間戳記的名稱和 MediaStore 條目
         val name=SimpleDateFormat(FILENAME_FORMART, Locale.US)
             .format(System.currentTimeMillis())
@@ -143,7 +138,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-
+*/
     // Implements VideoCapture use case, including start and stop capturing.
     private fun captureVideo() {
         //val videoCapture = this.videoCapture ?: return

@@ -4,5 +4,10 @@
     <string name="record">record</string>
     <string name="stop_capture">stop_capture</string>
     <string name="start_capture">start_capture</string>
-
+    <string-array name="identity">
+        <item>邱家妤</item>
+        <item>吳唯硯</item>
+        <item>李欣遙</item>
+        <item>鍾依真</item>
+    </string-array>
 </resources>

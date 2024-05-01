@@ -1,70 +1,55 @@
 package tw.edu.pu.cameraxapp
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
-import android.media.MediaSync.OnErrorListener
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Surface
 import android.view.Surface.ROTATION_180
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.FileOutputOptions
 import androidx.camera.video.MediaStoreOutputOptions
-import androidx.camera.video.OutputOptions
 import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
-import androidx.camera.video.VideoOutput
 import androidx.camera.video.VideoRecordEvent
-import androidx.camera.view.LifecycleCameraController
-import androidx.camera.view.video.AudioConfig
 import androidx.concurrent.futures.await
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
-import androidx.core.content.contentValuesOf
-import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import tw.edu.pu.cameraxapp.databinding.ActivityMainBinding
-import java.io.File
+import tw.edu.pu.cameraxapp.databinding.ActivityCameraBinding
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var viewBinding: ActivityMainBinding ////綁定布局文件中的視圖
+class CameraActivity : AppCompatActivity() {
+    private lateinit var viewBinding: ActivityCameraBinding////綁定布局文件中的視圖
     //If use cameraController
    //private lateinit var cameraController: LifecycleCameraController
     //If use cameraProvider
-    private  var imageCapture:ImageCapture?=null  //補捉圖像
+    //private  var imageCapture:ImageCapture?=null  //補捉圖像
 //    private lateinit var videoCapture:VideoCapture<VideoOutput>
     private lateinit var videoCapture: VideoCapture<Recorder>
 
     //private lateinit var videoCapture:VideoCapture<Recorder> //=VideoCapture.withOutput(Recorder.Builder().build())
     private var recording: Recording? = null
-    private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
-    private var controller:LifecycleCameraController?=null
-    private var cameraSelector:CameraSelector=CameraSelector.DEFAULT_FRONT_CAMERA
+    //private lateinit var outputDirectory: File
+    //private lateinit var cameraExecutor: ExecutorService
+    //private var controller:LifecycleCameraController?=null
+    private var cameraSelector:CameraSelector=CameraSelector.DEFAULT_BACK_CAMERA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         videoCapture = VideoCapture.withOutput(Recorder.Builder().build())
-        viewBinding=ActivityMainBinding.inflate(layoutInflater)
+        viewBinding=ActivityCameraBinding.inflate(layoutInflater)
 
         setContentView(viewBinding.root)
         if(!hasPermissions(baseContext)){              //作者選擇使用 baseContext，無論程式碼位於 Activity 還是 Fragment 中，都能夠確保使用相同的 Context 進行權限檢查。
@@ -171,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         recording = videoCapture.output
             .prepareRecording(this, mediaStoreOutputOptions)
             .apply {
-                if (PermissionChecker.checkSelfPermission(this@MainActivity,
+                if (PermissionChecker.checkSelfPermission(this@CameraActivity,
                         android.Manifest.permission.RECORD_AUDIO) ==
                     PermissionChecker.PERMISSION_GRANTED)
                 {
@@ -236,7 +221,7 @@ class MainActivity : AppCompatActivity() {
                     add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
-        fun hasPermissions(context:Context)= Companion.REQUIRED_PERMISSIONS.all{
+        fun hasPermissions(context:Context)= REQUIRED_PERMISSIONS.all{
             ContextCompat.checkSelfPermission(context,it)==PackageManager.PERMISSION_GRANTED
 
         }

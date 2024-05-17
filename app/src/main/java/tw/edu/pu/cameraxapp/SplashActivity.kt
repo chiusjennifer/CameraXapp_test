@@ -26,14 +26,9 @@ class SplashActivity : AppCompatActivity() {
 
         // 快閃效果完成後跳轉到新的 Activity
         Handler(Looper.getMainLooper()).postDelayed({
-            val fadeOutTextAnimation = AlphaAnimation(1.0f, 0.0f)
-            fadeOutTextAnimation.interpolator = AccelerateInterpolator()
-            fadeOutTextAnimation.duration = 1000 // 一秒的淡出效果
-
-
             val fadeOutImageAnimation = AlphaAnimation(1.0f, 0.0f)
             fadeOutImageAnimation.interpolator = AccelerateInterpolator()
-            fadeOutImageAnimation.duration = 1000 // 一秒的淡出效果
+            fadeOutImageAnimation.duration = 2000 // 一秒的淡出效果
             flashImageView.startAnimation(fadeOutImageAnimation) // 將快閃效果應用到 imageView
 
             // 跳轉到新的 Activity
@@ -41,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(this, IdentityActivity::class.java)
                 startActivity(intent)
                 finish() // 結束當前 Activity，避免返回時再次看到快閃效果
-            }, 1000) // 一秒後跳轉到新的 Activity
+            }, 2000) // 一秒後跳轉到新的 Activity
         }, 0) // 立即開始快閃效果
     }
 }

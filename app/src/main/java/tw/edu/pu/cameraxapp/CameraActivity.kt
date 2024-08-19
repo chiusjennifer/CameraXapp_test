@@ -66,7 +66,6 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        imageView = findViewById(R.id.overlayView)
         videoCapture = VideoCapture.withOutput(Recorder.Builder().build())
 
         Log.v("TAG","viewBinding");
@@ -88,7 +87,7 @@ class CameraActivity : AppCompatActivity() {
 
         }
         //viewBinding.ImageCaptureButton.setOnClickListener { takePhoto() } //設置拍照按鈕的點擊監聽器
-        viewBinding.Button.setOnClickListener { captureVideo() }
+        viewBinding.videoCaptureButton.setOnClickListener { captureVideo() }
         // 初始化 YOLOv8 檢測器
         yolov8Detector = Detector_yolov8().apply {
             setModelFile(tf_path)
@@ -182,7 +181,7 @@ class CameraActivity : AppCompatActivity() {
 */
     // Implements VideoCapture use case, including start and stop capturing.
     private fun captureVideo() {
-        viewBinding.Button.isEnabled = false
+        viewBinding.videoCaptureButton.isEnabled = false
 
         val curRecording = recording
         if (curRecording != null) {
@@ -222,7 +221,7 @@ class CameraActivity : AppCompatActivity() {
                     is VideoRecordEvent.Start -> {
                         // Start YOLOv8 detection
                         startYoloV8Detection()
-                        viewBinding.Button.apply {
+                        viewBinding.videoCaptureButton.apply {
                             text = getString(R.string.stop_capture)
                             isEnabled = true
                         }
@@ -243,7 +242,7 @@ class CameraActivity : AppCompatActivity() {
                             Log.e(TAG, "Video capture ends with error: " +
                                     "${recordEvent.error}")
                         }
-                        viewBinding.Button.apply {
+                        viewBinding.videoCaptureButton.apply {
                             text = getString(R.string.start_capture)
                             isEnabled = true
                         }

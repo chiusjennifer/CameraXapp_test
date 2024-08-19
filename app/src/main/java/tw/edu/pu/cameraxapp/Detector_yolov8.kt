@@ -243,20 +243,6 @@ class Detector_yolov8 {
         }
         return nmsRecognitions
     }
-
-    private fun calculateIoU(rectA: RectF, rectB: RectF): Float {
-        val intersection = RectF(
-            max(rectA.left, rectB.left),
-            max(rectA.top, rectB.top),
-            min(rectA.right, rectB.right),
-            min(rectA.bottom, rectB.bottom)
-        )
-
-        val intersectionArea = intersection.width() * intersection.height()
-        val unionArea = rectA.width() * rectA.height() + rectB.width() * rectB.height() - intersectionArea
-
-        return intersectionArea / unionArea
-    }
     /**
      * 对所有数据不区分类别做非极大抑制
      *
